@@ -48,7 +48,7 @@ window.globalSimulationData = {
   ILCA: {
     maneuver: null,
     pointOfSail: "",
-    heading: 90,
+    heading: 45,
     speed: 0,
     sailorPosition: "Mid Center",
     boomAngle: '0-8',

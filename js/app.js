@@ -42,16 +42,8 @@ async function loadConfig() {
           warningDiv.classList.remove("danger-shake");
         }
 
-        alert("Boom! You capsized! Make sure to hike out or ease your sheet when the wind picks up. Wind is reset back to 7 knots.");
-        window.globalSimulationData.windSpeed = 7;
-        const windRadio = document.querySelector(
-            'input[name="wind"][value="7"]'
-        );
-
-        if (windRadio) {
-            windRadio.checked = true;
-        }
-        launchSimulation();
+        alert("Boom! You capsized! Make sure to hike out or ease your sheet when the wind picks up.");
+        stopSimulation();
         return;
       }
 
@@ -138,7 +130,7 @@ export function launchSimulation() {
   window.globalSimulationData.ILCA.heelAngle = 0;
 
 
-  window.globalSimulationData.ILCA.heading = 90;
+  window.globalSimulationData.ILCA.heading = 45;
   window.globalSimulationData.ILCA.speed = 0;
 
   window.globalSimulationData.ILCA.timer = 0;
@@ -154,7 +146,7 @@ export function stopSimulation() {
 }
 
 window.launchSimulation = launchSimulation;
-
+window.stopSimulation = stopSimulation;
 
 loadConfig();
 

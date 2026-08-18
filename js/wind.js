@@ -3,7 +3,7 @@
 // Permanent training wind
 export let baseWindSpeedMS = 5.14; // 10 knots
 
-const WIND_DIRECTION = 0; // 0° = North
+const WIND_DIRECTION = 90; // 90° = West
 
 // Wind strength settings
 const LIGHT_WIND_KNOTS = 10;

@@ -10,7 +10,7 @@ export function updateILCA(map) {
   // 🏁 SAFETY CHECK
   if (window.globalSimulationData.raceFinished) {
     if (window.globalSimulationData.ILCA) window.globalSimulationData.ILCA.speed = 0;
-//drawILCAOnMap(map);
+    drawILCAOnMap(map);
     return; 
   }
 
@@ -36,7 +36,7 @@ export function updateILCA(map) {
 
 
   // Redraw boat overlay on the webpage map
-  //drawILCAOnMap(map);
+  drawILCAOnMap(map);
 }
 
 
