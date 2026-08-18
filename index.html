@@ -25,11 +25,11 @@
 </head>
 <body>
   <div class="container">
-    <div id="inputControl"       style="flex: 1;">
+    <div id="controlSelector"    style="flex: 1;">
         <h4>Control Selector</h4>
-        <div class="point-of-sail-options" style="display: flex; gap: 12px; align-items: center;">
+        <div class="controlSelector" style="display: flex; gap: 12px; align-items: center;">
             <label>
-                <input type="radio" name="inputControl" value="1">
+                <input type="radio" name="inputControl" value="1" checked>
                 Sheet
             </label>
             <label>
@@ -58,8 +58,7 @@
       <button id="startExamBtn">Start Exam</button>
     </div>
     <div id="input-pane"         style="flex: 2;">
-
-      <div id="mainsheetControl" class="input-section active">
+      <div id="mainsheetControl" class="input-section">
         <h4>&nbsp;MainSheet</h4>
         <div class="control-row">
           <!-- Upwind Ranges -->
@@ -139,8 +138,7 @@
   <script>
     // Map start simulation button logic
     const startExamBtn = document.getElementById('startExamBtn');
-  
-    if (startExamBtn) {
+      if (startExamBtn) {
         startExamBtn.addEventListener('click', () => {
           launchSimulation();
           startExamBtn.style.display = 'none';
@@ -148,33 +146,25 @@
     }
   </script>
 
+  <script>
+    // JavaScript
+    const container = document.getElementById('controlSelector');
+    container.addEventListener('change', (event) => {
+        console.log(`clicked on: ${event.target.value}`);
+        switch (event.target.value) {
+        case "mainsheetControl":
+          document.getElementById("mainsheetControl").classList.add("active");
+        case "daggerboardControl":
+          document.getElementById("daggerboardControl").classList.add("active");
+
+      }
+    });
+
+</script>
+
 
 <script>
-    const inputControl = document.getElementById("inputControl");
 
-    if (controlDiv) {
-        controlDiv.classList.add("active");
-    }
-
-    document.addEventListener("click", function(event) {
-        // Check if the clicked item is a control button
-        if (event.target.classList.contains("control-button")) {
-            
-            // Find the parent section (like #boomControl or #vangControl)
-            const parentSection = event.target.closest(".input-section");
-            
-            if (parentSection) {
-                // Find any previously selected button in THIS section and clear it
-                const previousActive = parentSection.querySelector(".control-button.selected");
-                if (previousActive) {
-                    previousActive.classList.remove("selected");
-                }
-                
-                // Add the highlight class to the newly clicked button
-                event.target.classList.add("selected");
-            }
-        }
-    });
 
     // ================================================================
     // Placeholder functions so your HTML 'onclick' attributes don't error out
