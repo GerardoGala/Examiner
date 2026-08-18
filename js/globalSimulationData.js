@@ -13,7 +13,7 @@ window.globalSimulationData = {
   windwardMarkLon: 121.401286,
   
   gybeMarkLat: 13.67091593,
-  gybeMarkLon: 121.40082041,
+  gybeMarkLon: 121.401286 + 0.00027735, // 0.00027735 is 30 meters Eest
 
   askedAI: false,
   paused: false,

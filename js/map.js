@@ -84,7 +84,7 @@ window.globalSimulationData.activeMarker = L.marker([windwardMarkLat, windwardMa
 
   // --- topleft ---
   const TopLeftControls = L.Control.extend({
-    options: { position: 'topleft' },
+    options: { position: 'bottomleft' },
     onAdd: function(map) {
       const container = L.DomUtil.create('div', 'top-left-controls-container');
       
