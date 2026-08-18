@@ -16,8 +16,7 @@ export function initMap() {
   const leewardMarkLon = window.globalSimulationData.leewardMarkLon;
   const windwardMarkLat = window.globalSimulationData.windwardMarkLat;
   const windwardMarkLon = window.globalSimulationData.windwardMarkLon;
-  const gybeMarkLat = window.globalSimulationData.gybeMarkLat;
-  const gybeMarkLon = window.globalSimulationData.gybeMarkLon;
+
 
   const buoySVG = `
     <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">
@@ -34,20 +33,9 @@ export function initMap() {
   });
 
 
-// =========================================================================
-// 🟢 STREAMLINED STATIC GREEN TARGET GLOW (No Flashing)
-// =========================================================================
-
-// A clean, solid green circle with a soft outer frame (40px wide)
-const greenTargetSVG = '<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48"><circle cx="24" cy="24" r="20" fill="#00FF00" opacity="0.4" stroke="#00CC00" stroke-width="2"/></svg>';
 
 
-const greenTargetIcon = L.icon({
-  iconUrl: "data:image/svg+xml;base64," + btoa(greenTargetSVG),
-  iconSize: [48, 48],      // 📐 Made bigger (Full 48x48 screen area)
-  iconAnchor: [24, 24],    // 🎯 Dead center midpoint alignment (48 / 2)
-  popupAnchor: [0, -24]
-});
+
 
 
   const map = L.map('map', {
@@ -64,15 +52,10 @@ const greenTargetIcon = L.icon({
   const windwardMarker = L.marker([windwardMarkLat, windwardMarkLon], { icon: buoyIcon })
     .addTo(map);
 
-  const gybeMarker = L.marker([gybeMarkLat, gybeMarkLon], { icon: buoyIcon })
-    .addTo(map);
-
   const leewardMarker = L.marker([leewardMarkLat, leewardMarkLon], { icon: buoyIcon })
     .addTo(map);
 
-  // --- Add the green target marker on top of the windward Mark ---
-window.globalSimulationData.activeMarker = L.marker([windwardMarkLat, windwardMarkLon], { icon: greenTargetIcon })
-  .addTo(map);
+
 
 
   // Add scale control to show distances on the map
@@ -143,7 +126,7 @@ window.globalSimulationData.activeMarker = L.marker([windwardMarkLat, windwardMa
   // Define bounds safely encompassing all three active race marks
   const bounds = L.latLngBounds([
     [windwardMarkLat, windwardMarkLon],
-    [gybeMarkLat, gybeMarkLon],
+  
     [leewardMarkLat, leewardMarkLon]
   ]);
   map.fitBounds(bounds, { padding: [50, 50] });
