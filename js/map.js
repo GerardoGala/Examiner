@@ -12,10 +12,10 @@ function formatTime(totalSeconds) {
 }
 
 export function initMap() {
-  const leewardMarkLat = window.globalSimulationData.leewardMarkLat;
-  const leewardMarkLon = window.globalSimulationData.leewardMarkLon;
-  const windwardMarkLat = window.globalSimulationData.windwardMarkLat;
-  const windwardMarkLon = window.globalSimulationData.windwardMarkLon;
+  const leewardMarkLat = 13.670464;
+  const leewardMarkLon = 121.401286;
+  const windwardMarkLat = 13.67136786;
+  const windwardMarkLon = 121.401286;
 
 
   const buoySVG = `
@@ -48,7 +48,7 @@ export function initMap() {
     touchZoom: false        
   });
 
-  // --- Add the 3 Marks to the Map ---
+  // --- Add the 2 Marks to the Map ---
   const windwardMarker = L.marker([windwardMarkLat, windwardMarkLon], { icon: buoyIcon })
     .addTo(map);
 

@@ -200,3 +200,19 @@ input[type="radio"] {
 #pointOfSailControl label {
     white-space: nowrap;
 }
+
+  #startExamBtn {
+    position: absolute;
+    bottom: 30px;       /* lower center */
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    background: #007acc;
+    color: #fff;
+    border: none;
+    padding: 16px 32px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    border-radius: 8px;
+    cursor: pointer;
+  }

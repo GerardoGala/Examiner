@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>DinghyTraining</title>
+  <title>Examiner</title>
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
   <!-- Reference to your new external CSS file -->
@@ -25,8 +25,43 @@
 </head>
 <body>
   <div class="container">
+    <div id="inputControl"       style="flex: 1;">
+        <h4>Control Selector</h4>
 
-    <div id="map"                style="flex: 10;">
+        <div class="point-of-sail-options" style="display: flex; gap: 12px; align-items: center;">
+
+            <label>
+                <input type="radio" name="inputControl" value="1">
+                Sheet
+            </label>
+
+            <label>
+                <input type="radio" name="inputControl" value="2">
+                Sailor Position
+            </label>
+
+            <label>
+                <input type="radio" name="inputControl" value="3">
+                Daggerboard
+            </label>
+
+            <label>
+                <input type="radio" name="inputControl" value="4">
+                Vang
+            </label>
+
+            <label>
+                <input type="radio" name="inputControl" value="5">
+                Downhaul
+            </label>
+            <label>
+                <input type="radio" name="inputControl" value="6">
+                Outhaul
+            </label>
+        </div>
+    </div>
+    <div id="map"                style="flex: 9;">
+      <button id="startExamBtn">Start Exam</button>
     </div>
     <div id="input-pane"         style="flex: 2;">
 
@@ -103,33 +138,73 @@
         </div>
       </div>
     </div>
-
   </div>
  
 
 
-  <script type="module">
-      import { launchSimulation } from "./js/app.js";
-      launchSimulation();
+  <script>
+    // Map start simulation button logic
+    const startExamBtn = document.getElementById('startExamBtn');
+  
+    if (startExamBtn) {
+        startExamBtn.addEventListener('click', () => {
+          launchSimulation();
+          startExamBtn.style.display = 'none';
+       });
+    }
   </script>
+
+
+<script>
+    const inputControl = document.getElementById("inputControl");
+
+    if (controlDiv) {
+        controlDiv.classList.add("active");
+    }
+
+    document.addEventListener("click", function(event) {
+        // Check if the clicked item is a control button
+        if (event.target.classList.contains("control-button")) {
+            
+            // Find the parent section (like #boomControl or #vangControl)
+            const parentSection = event.target.closest(".input-section");
+            
+            if (parentSection) {
+                // Find any previously selected button in THIS section and clear it
+                const previousActive = parentSection.querySelector(".control-button.selected");
+                if (previousActive) {
+                    previousActive.classList.remove("selected");
+                }
+                
+                // Add the highlight class to the newly clicked button
+                event.target.classList.add("selected");
+            }
+        }
+    });
+
+    // ================================================================
+    // Placeholder functions so your HTML 'onclick' attributes don't error out
+    // Keep these if you haven't written the real logic for them yet!
+    // ================================================================
+    function updateBoomControl(val) { console.log("Boom set to:", val); }
+    function updateDaggerboardControl(val) { console.log("Daggerboard set to:", val); }
+    function updateSailorPosition(val) { console.log("Sailor position set to:", val); }
+    function updateVangControl(val) { console.log("Vang set to:", val); }
+    function updateDownhaulControl(val) { console.log("Downhaul set to:", val); }
+    function updateOuthaulControl(val) { console.log("Outhaul set to:", val); }
+</script>
 
   <script>
-      const beamReach = document.querySelector(
-          'input[name="pointOfSail"][value="90"]'
-      );
-      if (beamReach) {
-          beamReach.checked = true;
-          beamReach.dispatchEvent(new Event('change', { bubbles: true }));
-      }
-
-      const lightWind = document.querySelector(
-          'input[name="wind"][value="7"]'
-      );
-      if (lightWind) {
-          lightWind.checked = true;
-          lightWind.dispatchEvent(new Event('change', { bubbles: true }));
-      }
+    // Map start simulation button logic
+    const mapStartSimulationBtn = document.getElementById('mapStartSimulationBtn');
+    if (mapStartSimulationBtn) {
+        mapStartSimulationBtn.addEventListener('click', () => {
+          launchSimulation();
+          mapStartSimulationBtn.style.display = 'none';
+        });
+    }
   </script>
+
 
 <script>
     // 1. Handle the page load parameters (Your original logic)
