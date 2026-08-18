@@ -1,7 +1,7 @@
 // ilcaUpdateILCA.js
 import { drawILCAOnMap } from "./ilcaMap.js";
 import { handleControls } from "./ilcaHandleControls.js";
-
+import { trackRaceLegs } from "./ilcaTrackRaceLegs.js";
 
 export function updateILCA(map) {
   const windDir = window.globalSimulationData.windDirection;
@@ -33,7 +33,10 @@ export function updateILCA(map) {
     window.globalSimulationData.ILCA.lon = lon + ((distance * Math.sin(headingRad)) / metersPerDegLon);
   }
 
-
+  // Monitor race progression and force update the live telemetry variables on every single tick
+  if (!window.globalSimulationData.raceFinished) {
+    trackRaceLegs(map);
+  }
 
   // Redraw boat overlay on the webpage map
   drawILCAOnMap(map);

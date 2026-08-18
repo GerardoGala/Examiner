@@ -17,45 +17,52 @@
   <script type="module" src="js/ilcaHandleControls.js"></script>
   <script type="module" src="js/ilcaMap.js"></script>
 
-
-  <!-- STEP 4: Load UI and Event Listeners Last -->
+  <!-- STEP 3: Load UI and Event Listeners Last -->
   <!-- (Using 'defer' ensures the HTML elements are fully built before they run) -->
   <script src="js/gameDashboard.js" defer></script>
 <meta name="viewport" content="width=device-width, initial-scale=.5, user-scalable=no">
 </head>
 <body>
   <div class="container">
-    <div id="controlSelector"    style="flex: 1;">
-        <h4>Control Selector</h4>
-        <div class="controlSelector" style="display: flex; gap: 12px; align-items: center;">
-            <label>
-                <input type="radio" name="inputControl" value="1" checked>
-                Sheet
-            </label>
-            <label>
-                <input type="radio" name="inputControl" value="2">
-                Sailor Position
-            </label>
-            <label>
-                <input type="radio" name="inputControl" value="3">
-                Daggerboard
-            </label>
-            <label>
-                <input type="radio" name="inputControl" value="4">
-                Vang
-            </label>
-            <label>
-                <input type="radio" name="inputControl" value="5">
-                Downhaul
-            </label>
-            <label>
-                <input type="radio" name="inputControl" value="6">
-                Outhaul
-            </label>
-        </div>
+    <div id="map"                style="flex: 8;">
     </div>
-    <div id="map"                style="flex: 9;">
-      <button id="startExamBtn">Start Exam</button>
+    <div id="controlSelector"    style="flex: 1;">
+      <h4>Control Selector</h4>
+      <div class="controlSelector" style="display: flex; gap: 12px; align-items: center;">
+          <label>
+              <input type="radio" name="inputControl" value="1" checked>
+              Sheet
+          </label>
+          <label>
+              <input type="radio" name="inputControl" value="2">
+              Sailor Position
+          </label>
+          <label>
+              <input type="radio" name="inputControl" value="3">
+              Daggerboard
+          </label>
+          <label>
+              <input type="radio" name="inputControl" value="4">
+              Vang
+          </label>
+          <label>
+              <input type="radio" name="inputControl" value="5">
+              Downhaul
+          </label>
+          <label>
+              <input type="radio" name="inputControl" value="6">
+              Outhaul
+          </label>
+      </div>
+    </div>
+    <div id="rudderControl"      style="flex: 1;">
+      <div class="control-row">
+        <button id="startExamBtn">Start Exam</button>
+      </div>
+      <div class="control-row"> 
+        <button class="control-button button-port" onclick="window.globalSimulationData.ILCA.maneuver = 'turn-port'">TURN PORT</button>
+        <button class="control-button button-starboard" onclick="window.globalSimulationData.ILCA.maneuver = 'turn-starboard'">TURN STARBOARD</button>
+      </div>
     </div>
     <div id="input-pane"         style="flex: 2;">
       <div id="mainsheetControl" class="input-section active">
@@ -183,7 +190,7 @@
 
   </script>
 
-
+<script>
     // ================================================================
     // Placeholder functions so your HTML 'onclick' attributes don't error out
     // Keep these if you haven't written the real logic for them yet!
