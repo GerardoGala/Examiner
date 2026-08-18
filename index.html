@@ -58,7 +58,7 @@
       <button id="startExamBtn">Start Exam</button>
     </div>
     <div id="input-pane"         style="flex: 2;">
-      <div id="mainsheetControl" class="input-section">
+      <div id="mainsheetControl" class="input-section active">
         <h4>&nbsp;MainSheet</h4>
         <div class="control-row">
           <!-- Upwind Ranges -->
@@ -147,23 +147,41 @@
   </script>
 
   <script>
-    // JavaScript
     const container = document.getElementById('controlSelector');
-    container.addEventListener('change', (event) => {
-        console.log(`clicked on: ${event.target.value}`);
-        switch (event.target.value) {
-        case "mainsheetControl":
-          document.getElementById("mainsheetControl").classList.add("active");
-        case "daggerboardControl":
-          document.getElementById("daggerboardControl").classList.add("active");
 
-      }
+    container.addEventListener('change', (event) => {
+        const selectedValue = event.target.value;
+        console.log(`clicked on value: ${selectedValue}`);
+
+        // 1. First, hide all control sections by removing the active class
+        const sections = document.querySelectorAll('.input-section');
+        sections.forEach(section => section.classList.remove('active'));
+
+        // 2. Show only the section that matches the checked radio button
+        // (Note: HTML values are numbers "1", "2", "3", etc.)
+        switch (selectedValue) {
+            case "1":
+                document.getElementById("mainsheetControl").classList.add("active");
+                break; // 💡 Added break to prevent falling through
+            case "2":
+                document.getElementById("sailorPositionControl").classList.add("active");
+                break;
+            case "3":
+                document.getElementById("daggerboardControl").classList.add("active");
+                break;
+            case "4":
+                document.getElementById("vangControl").classList.add("active");
+                break;
+            case "5":
+                document.getElementById("downhaulControl").classList.add("active");
+                break;
+            case "6":
+                document.getElementById("outhaulControl").classList.add("active");
+                break;
+        }
     });
 
-</script>
-
-
-<script>
+  </script>
 
 
     // ================================================================
