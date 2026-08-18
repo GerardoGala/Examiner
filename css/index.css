@@ -25,7 +25,43 @@ h4 {
   flex-direction: column;
   gap: 8px; /* Tighter gap between the 4 major divs */
   height: 100dvh;
+
+  /* 1. Make the input pane a flex container that fills the height */
+#input-pane {
+  display: flex;
+  flex-direction: column;
+  height: 100%; /* Or 100vh depending on your container setup */
 }
+
+/* 2. Hide inactive sections, but make the active section fill ALL available space */
+.input-section {
+  display: none; 
+}
+
+.input-section.active {
+  display: flex;
+  flex-direction: column;
+  flex: 1; /* 💡 This forces the active section to stretch and fill the whole #input-pane */
+  height: 100%;
+}
+
+/* 3. Make the rows stretch evenly from top to bottom */
+.input-section.active .control-row,
+.input-section.active .control-column {
+  display: flex;
+  flex: 1; /* 💡 This splits the vertical space evenly among rows/columns */
+  gap: 8px; /* Adds space between buttons */
+  margin-bottom: 8px;
+}
+
+/* 4. Make the buttons expand to fill the width and height of their row */
+.control-button {
+  flex: 1; /* 💡 This forces buttons to stretch horizontally to fill the row */
+  width: 100%;
+  height: 100%; /* Forces buttons to stretch vertically */
+  font-size: 1.1rem; /* Optional: makes text easier to read on big buttons */
+}
+
 
 @media (min-width: 768px) {
   .container {
