@@ -14,7 +14,8 @@ function formatTime(totalSeconds) {
 export function initMap() {
   const leewardMarkLat = 13.670464;
   const leewardMarkLon = 121.401286;
-  const windwardMarkLat = 13.67136786;
+  // Adjusted to sit exactly 700 meters directly North of the leeward mark
+  const windwardMarkLat = 13.6767624; 
   const windwardMarkLon = 121.401286;
 
 

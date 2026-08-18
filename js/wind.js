@@ -1,12 +1,12 @@
 // js/wind.js
 
 // Permanent training wind
-export let baseWindSpeedMS = 3.6; // 7 knots
+export let baseWindSpeedMS = 5.14; // 10 knots
 
 const WIND_DIRECTION = 0; // 0° = North
 
 // Wind strength settings
-const LIGHT_WIND_KNOTS = 7;
+const LIGHT_WIND_KNOTS = 10;
 const STRONG_WIND_KNOTS = 12;
 
 
