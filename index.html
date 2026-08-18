@@ -27,29 +27,23 @@
   <div class="container">
     <div id="inputControl"       style="flex: 1;">
         <h4>Control Selector</h4>
-
         <div class="point-of-sail-options" style="display: flex; gap: 12px; align-items: center;">
-
             <label>
                 <input type="radio" name="inputControl" value="1">
                 Sheet
             </label>
-
             <label>
                 <input type="radio" name="inputControl" value="2">
                 Sailor Position
             </label>
-
             <label>
                 <input type="radio" name="inputControl" value="3">
                 Daggerboard
             </label>
-
             <label>
                 <input type="radio" name="inputControl" value="4">
                 Vang
             </label>
-
             <label>
                 <input type="radio" name="inputControl" value="5">
                 Downhaul
@@ -65,7 +59,7 @@
     </div>
     <div id="input-pane"         style="flex: 2;">
 
-      <div id="boomControl" class="input-section">
+      <div id="mainsheetControl" class="input-section active">
         <h4>&nbsp;MainSheet</h4>
         <div class="control-row">
           <!-- Upwind Ranges -->
@@ -207,16 +201,7 @@
 
 
 <script>
-    // 1. Handle the page load parameters (Your original logic)
-    const params = new URLSearchParams(window.location.search);
-    const control = params.get("control") || "sailorPositionControl";
-    const controlDiv = document.getElementById(control);
-
-    if (controlDiv) {
-        controlDiv.classList.add("active");
-    }
-
-    // 2. NEW LOGIC: Watch for button clicks to update the highlights instantly
+    // Watch for button clicks to update the highlights instantly
     // This listens to any click inside the document
     document.addEventListener("click", function(event) {
         // Check if the clicked item is a control button
