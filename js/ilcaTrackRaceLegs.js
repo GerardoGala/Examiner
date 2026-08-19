@@ -98,7 +98,6 @@ export function trackRaceLegs(map) {
         window.globalSimulationData.leewardMarkRounded = 2; 
         if (window.globalSimulationData.activeMarker) window.globalSimulationData.activeMarker.remove();
         finalTimeScore = window.globalSimulationData.ILCA.timer || 0;
-        finalWindSpeed = Number(window.globalSimulationData.windSpeed) || 0;
         triggerRedirect = true;
         break;
     }
@@ -136,12 +135,7 @@ export function trackRaceLegs(map) {
 
   // --- 4. REDIRECTION & DIALOG INTERCEPTOR ---
   if (triggerRedirect) {
-    // 🎯 FIXED: Completely removed window.showFinishDialog() to banish the first screen forever!
-    // The tracker now instantly forwards the browser straight to your beautiful finish.html dashboard.
-    
-    // We pass a default 'top10=false' here because your fresh finish.html now runs its own independent 
-    // cloud database checks the moment a player clicks the Close button anyway!
-    window.location.href = `finish.html?time=${finalTimeScore}&wind=${finalWindSpeed}&top10=false&askedAI=${window.globalSimulationData.askedAI === true}`;
+    window.location.href = `finish.html?time=${window.globalSimulationData.ILCA.timer}`;
   }
 }
 

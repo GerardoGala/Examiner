@@ -41,25 +41,6 @@
       gap: 8px;
     }
 
-    /* Tall, scrollable text box for raw JSON data metrics */
-    .telemetry-container {
-      width: 100%;
-      height: 200px; /* Tall height configuration */
-      background: #111;
-      border: 1px solid #444;
-      border-radius: 6px;
-      margin-top: 15px;
-      padding: 10px;
-      box-sizing: border-box;
-      overflow-y: auto; /* Enables vertical scrolling */
-      text-align: left;
-      font-family: monospace;
-      font-size: 12px;
-      color: #00ff66; /* Retro green terminal data look */
-      white-space: pre-wrap;
-      word-break: break-all;
-    }
-
     /* Button styling layout overrides */
     button {
       margin-top: 12px;
@@ -88,18 +69,30 @@
   </style>
 </head>
 <body>
-
   <div class="modal-box">
     <h2>🏁 Congratulations!</h2>
     <p id="raceSummary">
       Your race time is <span id="raceTime">--</span> seconds.<br>
-      Wind: <span id="windSpeed">--</span> knots.
     </p>
-
     <button onclick="closeFinishDialog()">Close</button>
   </div>
 
+  <script>
+    function initResultsPage() {
+      const urlParams = new URLSearchParams(window.location.search);
+    
+      // 1. Grab primary headers straight out of the URL parameter strings
+      const raceTimeValue = urlParams.get('time') || '0';
+      document.getElementById("raceTime").innerText = raceTimeValue;
+    }
+    function closeFinishDialog() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const finalTimeScore = urlParams.get('time') || '0';
+      window.location.href = `index.html?time=${finalTimeScore}`;
+    }
 
-  
+    // Launch execution loops on view loading
+    initResultsPage();
+  </script>
 </body>
 </html>
