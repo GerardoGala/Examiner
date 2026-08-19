@@ -14,32 +14,47 @@
   <link rel="stylesheet" href="css/index.css">
 </head>
 <body>
-  <section class="container text-center py-4">
-    <div style="max-width: 800px; margin: 0 auto;">
-      <h2>Congratulations!</h2>
-      <p id="raceSummary">
-        Your race time is <span id="raceTime">--</span> seconds.<br>
-      </p>
-    </div>
-    <button onclick="closeFinishDialog()"  class="btn btn-primary btn-lg">Close</button>
-  </section>
+<section class="container text-center py-4">
+  <div id="pass" style="max-width: 800px; margin: 0 auto; display:none;">
+    <h2>Congratulations!</h2>
+    <p>
+      Your race time is <span id="raceTimePass">--</span> seconds.<br>
+    </p>
+  </div>
 
-  <script>
-    function initResultsPage() {
-      const urlParams = new URLSearchParams(window.location.search);
-    
-      // 1. Grab primary headers straight out of the URL parameter strings
-      const raceTimeValue = urlParams.get('time') || '0';
-      document.getElementById("raceTime").innerText = raceTimeValue;
-    }
-    function closeFinishDialog() {
-      const urlParams = new URLSearchParams(window.location.search);
-      const finalTimeScore = urlParams.get('time') || '0';
-      window.location.href = `index.html?time=${finalTimeScore}`;
-    }
+  <div id="fail" style="max-width: 800px; margin: 0 auto; display:none;">
+    <h2>Please try again</h2>
+    <p>
+      Your race time of <span id="raceTimeFail">--</span> seconds did not meet the maximum limit of 240 seconds.<br>
+    </p>
+  </div>
 
-    // Launch execution loops on view loading
-    initResultsPage();
-  </script>
+  <button onclick="closeFinishDialog()" class="btn btn-primary btn-lg">Close</button>
+</section>
+
+<script>
+  function initResultsPage() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const raceTimeValue = parseFloat(urlParams.get('time')) || 0;
+
+    if (raceTimeValue <= 240) {
+      document.getElementById("pass").style.display = "block";
+      document.getElementById("raceTimePass").innerText = raceTimeValue;
+    } else {
+      document.getElementById("fail").style.display = "block";
+      document.getElementById("raceTimeFail").innerText = raceTimeValue;
+    }
+  }
+
+  function closeFinishDialog() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const finalTimeScore = urlParams.get('time') || '0';
+    window.location.href = `index.html?time=${finalTimeScore}`;
+  }
+
+  // Run on load
+  initResultsPage();
+</script>
+
 </body>
 </html>
