@@ -33,16 +33,6 @@ export function trackRaceLegs(map) {
       targetLon = window.globalSimulationData.leewardMarkLon;
       targetName = "Leeward Mark"; 
       break;
-    case 3:
-      targetLat = window.globalSimulationData.windwardMarkLat;
-      targetLon = window.globalSimulationData.windwardMarkLon;
-      targetName = "Windward Mark";
-      break;
-    case 4:
-      targetLat = window.globalSimulationData.leewardMarkLat;
-      targetLon = window.globalSimulationData.leewardMarkLon;
-      targetName = "Leeward Mark (Finish Line)";
-      break;
     default:
       return; 
   }
@@ -82,12 +72,7 @@ export function trackRaceLegs(map) {
       switch (window.globalSimulationData.currentLeg) {
         case 0: window.globalSimulationData.ILCA.tack = "Starboard"; break;
         case 1: window.globalSimulationData.ILCA.tack = "Port"; break;
-        case 2: window.globalSimulationData.ILCA.tack = "Starboard"; break;
-        case 3: window.globalSimulationData.ILCA.tack = "Port"; break;
       }
-
-      eventNotification(`Auto-rounded: Boat stabilized on ${window.globalSimulationData.ILCA.tack} Tack.`);
-
     }
 
     // --- 3. STATE MACHINE FOR MARK ROUNDINGS & AUTO-STEERING ---
@@ -109,29 +94,12 @@ export function trackRaceLegs(map) {
         if (window.globalSimulationData.activeMarker) window.globalSimulationData.activeMarker.setLatLng([nextMarkLat, nextMarkLon]);
         break;
       case 2:
-        window.globalSimulationData.leewardMarkRounded = 1;
-        window.globalSimulationData.currentLeg = 3; 
-        nextMarkLat = window.globalSimulationData.windwardMarkLat;
-        nextMarkLon = window.globalSimulationData.windwardMarkLon;
-        eventNotification("Leeward Mark passed. Starting Leg 4 Upwind Beat!");
-        if (window.globalSimulationData.activeMarker) window.globalSimulationData.activeMarker.setLatLng([nextMarkLat, nextMarkLon]);
-        break;
-      case 3:
-        window.globalSimulationData.windwardMarkRounded = 2;
-        window.globalSimulationData.currentLeg = 4; 
-        nextMarkLat = window.globalSimulationData.leewardMarkLat;
-        nextMarkLon = window.globalSimulationData.leewardMarkLon;
-        eventNotification("Windward Mark rounded a second time! Bear away into final downwind Run!");
-        if (window.globalSimulationData.activeMarker) window.globalSimulationData.activeMarker.setLatLng([nextMarkLat, nextMarkLon]);
-        break;
-      case 4:
         window.globalSimulationData.raceFinished = true;
         window.globalSimulationData.leewardMarkRounded = 2; 
         if (window.globalSimulationData.activeMarker) window.globalSimulationData.activeMarker.remove();
         finalTimeScore = window.globalSimulationData.ILCA.timer || 0;
         finalWindSpeed = Number(window.globalSimulationData.windSpeed) || 0;
         triggerRedirect = true;
-        eventNotification("Race Completed! Final dead downwind finish registered.");
         break;
     }
 
@@ -148,13 +116,11 @@ export function trackRaceLegs(map) {
         if (Math.abs(relativeAngleToWind) < 45) {
           const currentTack = window.globalSimulationData.ILCA.tack || "Starboard";
           newHeading = currentTack === "Starboard" ? (windDir + 45) % 360 : (windDir - 45 + 360) % 360;
-          
-          eventNotification(`Auto-Pilot: Avoided irons on Leg 3! Adjusted upwind heading to ${newHeading.toFixed(0)}° on ${currentTack}.`);
+
         }
       }
 
       window.globalSimulationData.ILCA.heading = newHeading;
-      eventNotification(`Auto-Pilot: Course adjusted to ${newHeading.toFixed(0)}°.`);
     }
   } else {
     const alertBox = document.getElementById("nearBuoy");

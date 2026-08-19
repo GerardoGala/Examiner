@@ -5,7 +5,6 @@ body {
   margin: 0;
   padding: 6px; /* Tiny padding at the page edges */
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  background-color: #e2530b;
   color: #333;
 }
 
@@ -25,6 +24,7 @@ h4 {
   flex-direction: column;
   gap: 8px; /* Tighter gap between the 4 major divs */
   height: 100dvh;
+}
 
   /* 1. Make the input pane a flex container that fills the height */
 #input-pane {
@@ -32,6 +32,7 @@ h4 {
   flex-direction: column;
   height: 100%; /* Or 100vh depending on your container setup */
 }
+
 
 /* 2. Hide inactive sections, but make the active section fill ALL available space */
 .input-section {

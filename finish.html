@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>🏁 Race Finished</title>
+  <style>
+    /* Clean, centered dark theme layout */
+    body {
+      background: #121212;
+      color: #fff;
+      margin: 0;
+      padding: 20px;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      box-sizing: border-box;
+    }
+
+    /* The main card matching your original nearRC style */
+    .modal-box {
+      background: #1e1e1e;
+      color: #fff;
+      padding: 24px;
+      border-radius: 10px;
+      font-size: 16px;
+      text-align: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+      border: 1px solid #333;
+      width: 380px; /* Medium-width box layout */
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    h2 {
+      margin-top: 0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* Tall, scrollable text box for raw JSON data metrics */
+    .telemetry-container {
+      width: 100%;
+      height: 200px; /* Tall height configuration */
+      background: #111;
+      border: 1px solid #444;
+      border-radius: 6px;
+      margin-top: 15px;
+      padding: 10px;
+      box-sizing: border-box;
+      overflow-y: auto; /* Enables vertical scrolling */
+      text-align: left;
+      font-family: monospace;
+      font-size: 12px;
+      color: #00ff66; /* Retro green terminal data look */
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+
+    /* Button styling layout overrides */
+    button {
+      margin-top: 12px;
+      background: #007bff;
+      color: white;
+      border: none;
+      padding: 10px 16px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+      width: 100%; /* Stretches buttons to align neatly */
+      transition: background 0.15s ease;
+    }
+
+    button:hover {
+      background: #0056b3;
+    }
+
+    button.copy-btn {
+      background: #28a745; /* Green color accent for the data copy task */
+    }
+
+    button.copy-btn:hover {
+      background: #218838;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="modal-box">
+    <h2>🏁 Congratulations!</h2>
+    <p id="raceSummary">
+      Your race time is <span id="raceTime">--</span> seconds.<br>
+      Wind: <span id="windSpeed">--</span> knots.
+    </p>
+
+    <button onclick="closeFinishDialog()">Close</button>
+  </div>
+
+
+  
+</body>
+</html>
