@@ -21,7 +21,7 @@
 </head>
 <body>
   <div class="container">
-    <div id="map"                style="flex: 8;">
+    <div id="map"                style="flex: 15;">
     </div>
     <div id="controlSelector"    style="flex: 1;">
       <h4>Control Selector</h4>
@@ -52,13 +52,15 @@
           </label>
       </div>
     </div>
-    <div id="rudderControl"      style="flex: 1;">
-      <div class="control-row"> 
-        <button class="control-button button-port" onclick="window.globalSimulationData.ILCA.maneuver = 'turn-port'">TURN PORT</button>
-        <button class="control-button button-starboard" onclick="window.globalSimulationData.ILCA.maneuver = 'turn-starboard'">TURN STARBOARD</button>
+    <div id="rudderControl"      style="flex: 1; display: flex; flex-direction: column;">
+      <div id="tackDiv" class="control-row" style="display: flex; flex: 1; align-items: stretch;">
+        <button class="control-button button-port" onclick="window.globalSimulationData.ILCA.maneuver = 'turn-port'" style="flex: 1; height: 100%;">TURN PORT</button>
+        <button class="control-button button-starboard" onclick="window.globalSimulationData.ILCA.maneuver = 'turn-starboard'" style="flex: 1; height: 100%;">TURN STARBOARD</button>
       </div>
     </div>
-    <div id="input-pane"         style="flex: 2;">
+
+
+  <div id="input-pane"           style="flex: 5;">
       <div id="mainsheetControl" class="input-section active">
         <h4>&nbsp;MainSheet</h4>
         <div class="control-row">
@@ -140,17 +142,14 @@
 
 
 
-<!-- 1. The Modal Markup (Place this anywhere inside your <body>) -->
+
 <div id="welcomeModal" class="modal-overlay">
     <div class="modal-content">
-        <!-- Loads your external welcome.html file -->
         <iframe src="welcome.html" id="welcomeFrame"></iframe>
     </div>
 </div>
 
-  <!-- 2. The CSS Styling (Place this inside your <head>) -->
   <style>
-  /* Darkens the background behind the modal */
   .modal-overlay {
       display: none; /* Hidden by default */
       position: fixed;
@@ -182,8 +181,7 @@
   }
   </style>
 
-  <!-- 3. The JavaScript Logic (Place this inside your <head> or right before </body>) -->
-  <script>
+   <script>
   document.addEventListener("DOMContentLoaded", function() {
       const modal = document.getElementById("welcomeModal");
 
@@ -248,18 +246,18 @@
 
   </script>
 
-<script>
-    // ================================================================
-    // Placeholder functions so your HTML 'onclick' attributes don't error out
-    // Keep these if you haven't written the real logic for them yet!
-    // ================================================================
-    function updateBoomControl(val) { console.log("Boom set to:", val); }
-    function updateDaggerboardControl(val) { console.log("Daggerboard set to:", val); }
-    function updateSailorPosition(val) { console.log("Sailor position set to:", val); }
-    function updateVangControl(val) { console.log("Vang set to:", val); }
-    function updateDownhaulControl(val) { console.log("Downhaul set to:", val); }
-    function updateOuthaulControl(val) { console.log("Outhaul set to:", val); }
-</script>
+  <script>
+      // ================================================================
+      // Placeholder functions so your HTML 'onclick' attributes don't error out
+      // Keep these if you haven't written the real logic for them yet!
+      // ================================================================
+      function updateBoomControl(val) { console.log("Boom set to:", val); }
+      function updateDaggerboardControl(val) { console.log("Daggerboard set to:", val); }
+      function updateSailorPosition(val) { console.log("Sailor position set to:", val); }
+      function updateVangControl(val) { console.log("Vang set to:", val); }
+      function updateDownhaulControl(val) { console.log("Downhaul set to:", val); }
+      function updateOuthaulControl(val) { console.log("Outhaul set to:", val); }
+  </script>
 
   <script>
     // Map start simulation button logic
@@ -273,51 +271,51 @@
   </script>
 
 
-<script>
-    // Watch for button clicks to update the highlights instantly
-    // This listens to any click inside the document
-    document.addEventListener("click", function(event) {
-        // Check if the clicked item is a control button
-        if (event.target.classList.contains("control-button")) {
-            
-            // Find the parent section (like #boomControl or #vangControl)
-            const parentSection = event.target.closest(".input-section");
-            
-            if (parentSection) {
-                // Find any previously selected button in THIS section and clear it
-                const previousActive = parentSection.querySelector(".control-button.selected");
-                if (previousActive) {
-                    previousActive.classList.remove("selected");
-                }
-                
-                // Add the highlight class to the newly clicked button
-                event.target.classList.add("selected");
-            }
-        }
-    });
+  <script>
+      // Watch for button clicks to update the highlights instantly
+      // This listens to any click inside the document
+      document.addEventListener("click", function(event) {
+          // Check if the clicked item is a control button
+          if (event.target.classList.contains("control-button")) {
+              
+              // Find the parent section (like #boomControl or #vangControl)
+              const parentSection = event.target.closest(".input-section");
+              
+              if (parentSection) {
+                  // Find any previously selected button in THIS section and clear it
+                  const previousActive = parentSection.querySelector(".control-button.selected");
+                  if (previousActive) {
+                      previousActive.classList.remove("selected");
+                  }
+                  
+                  // Add the highlight class to the newly clicked button
+                  event.target.classList.add("selected");
+              }
+          }
+      });
 
-    // ================================================================
-    // Placeholder functions so your HTML 'onclick' attributes don't error out
-    // Keep these if you haven't written the real logic for them yet!
-    // ================================================================
-    function updateBoomControl(val) { console.log("Boom set to:", val); }
-    function updateDaggerboardControl(val) { console.log("Daggerboard set to:", val); }
-    function updateSailorPosition(val) { console.log("Sailor position set to:", val); }
-    function updateVangControl(val) { console.log("Vang set to:", val); }
-    function updateDownhaulControl(val) { console.log("Downhaul set to:", val); }
-    function updateOuthaulControl(val) { console.log("Outhaul set to:", val); }
-</script>
+      // ================================================================
+      // Placeholder functions so your HTML 'onclick' attributes don't error out
+      // Keep these if you haven't written the real logic for them yet!
+      // ================================================================
+      function updateBoomControl(val) { console.log("Boom set to:", val); }
+      function updateDaggerboardControl(val) { console.log("Daggerboard set to:", val); }
+      function updateSailorPosition(val) { console.log("Sailor position set to:", val); }
+      function updateVangControl(val) { console.log("Vang set to:", val); }
+      function updateDownhaulControl(val) { console.log("Downhaul set to:", val); }
+      function updateOuthaulControl(val) { console.log("Outhaul set to:", val); }
+  </script>
 
 
   <script>
-    document.querySelectorAll('input[name="wind"]').forEach(radio => {
-        radio.addEventListener("change", () => {
-            const windSpeed = Number(radio.value);
-            window.globalSimulationData.windSpeed = windSpeed;
-            console.log("Wind changed to:", windSpeed, "knots");
-        });
-    });
-</script>
+      document.querySelectorAll('input[name="wind"]').forEach(radio => {
+          radio.addEventListener("change", () => {
+              const windSpeed = Number(radio.value);
+              window.globalSimulationData.windSpeed = windSpeed;
+              console.log("Wind changed to:", windSpeed, "knots");
+          });
+      });
+  </script>
 
 </body>
 </html>
