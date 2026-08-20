@@ -64,13 +64,6 @@ h4 {
 }
 
 
-@media (min-width: 768px) {
-  .container {
-    flex-direction: row;
-    align-items: stretch;
-  }
-}
-
 /* ==========================================
    3. Individual Panel Blocks
    ========================================== */
