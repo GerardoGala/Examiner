@@ -332,7 +332,6 @@ export function updateVMGControl() {
     <hr style="border: 0; border-top: 1px solid #eee; margin: 6px 0;">
     <div style="color: green; text-align: left;">
       <div>Target: <strong>Leg ${currentLeg + 1} (${currentMarkLabel})</strong></div>
-      <div>Distance to Mark:  ${distanceToTarget.toFixed(0)} m</div>
     </div>
   `;
 }
