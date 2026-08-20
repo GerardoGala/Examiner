@@ -25,15 +25,13 @@ window.globalSimulationData = {
   // --- UPDATED FOR 5-LEG OLYMPIC COURSE SYSTEM ---
   // 0 = Leg 1: To Windward (Beat)
   // 1 = Leg 2: To Gybe (Beam Reach)
-  // 2 = Leg 3: To Leeward (Broad Reach)
-  // 3 = Leg 4: To Windward (Second Beat Climb)
-  // 4 = Leg 5: To Leeward (Final Dead Downwind Run Finish)
+  // 3 = Leg 4: To Leeward (Final Dead Downwind Run Finish)
   currentLeg: 0,                                 
 
   // Rounded trackers increment each time a mark threshold is successfully crossed
-  windwardMarkRounded: 0,  // Reaches 1 on Leg 1, reaches 2 on Leg 4!
+  windwardMarkRounded: 0,  // Reaches 1 on Leg 1
   gybeMarkRounded: 0,      // Reaches 1 on Leg 2
-  leewardMarkRounded: 0,   // Reaches 1 on Leg 3, reaches 2 at the final race finish!
+  leewardMarkRounded: 0,   // Reaches 1 on Leg 3, the finish!
   raceFinished: false,
 
   // 🟢 NEW: Holds references to your physical Leaflet map markers
@@ -56,7 +54,7 @@ window.globalSimulationData = {
     vang: "Center",
     downhaul: "Base",
     outhaul: "Base",
-    //slightly south of 13.670464
+  
     lat: 13.670464,   
     lon: 121.401286,
     timer: 0,
