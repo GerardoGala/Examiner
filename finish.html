@@ -25,7 +25,7 @@
   <div id="fail" style="max-width: 800px; margin: 0 auto; display:none;">
     <h2>Please try again</h2>
     <p>
-      Your race time of <span id="raceTimeFail">--</span> seconds did not meet the maximum limit of 240 seconds.<br>
+      Your race time of <span id="raceTimeFail">--</span> seconds did not meet the maximum limit of 180 seconds.<br>
     </p>
   </div>
 
@@ -37,7 +37,7 @@
     const urlParams = new URLSearchParams(window.location.search);
     const raceTimeValue = parseFloat(urlParams.get('time')) || 0;
 
-    if (raceTimeValue <= 240) {
+    if (raceTimeValue <= 180) {
       document.getElementById("pass").style.display = "block";
       document.getElementById("raceTimePass").innerText = raceTimeValue;
     } else {
