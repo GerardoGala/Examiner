@@ -53,9 +53,6 @@
       </div>
     </div>
     <div id="rudderControl"      style="flex: 1;">
-      <div class="control-row">
-        <button id="startExamBtn">Start Exam</button>
-      </div>
       <div class="control-row"> 
         <button class="control-button button-port" onclick="window.globalSimulationData.ILCA.maneuver = 'turn-port'">TURN PORT</button>
         <button class="control-button button-starboard" onclick="window.globalSimulationData.ILCA.maneuver = 'turn-starboard'">TURN STARBOARD</button>
@@ -137,6 +134,11 @@
     </div>
   </div>
  
+<div class="control-row" style="position: fixed; top: 50%; left: 50%; transform: translateX(-50%); z-index: 9999;">
+    <button id="startExamBtn">Start Exam</button>
+</div>
+
+
 
 <!-- 1. The Modal Markup (Place this anywhere inside your <body>) -->
 <div id="welcomeModal" class="modal-overlay">
