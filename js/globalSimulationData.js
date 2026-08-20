@@ -4,19 +4,17 @@ window.globalSimulationData = {
   windDirection: 0,
   windSpeed: 0,   
 
-  // Base coordinates for the course setup
+  // Base coordinates (The Starting / Leeward Gate Area)
   leewardMarkLat: 13.670464,
   leewardMarkLon: 121.401286,
 
-  // Absolute positions calculated from the previous 0.25 testing factor
-  windwardMarkLat: 13.67136786,
+  // 🏁 LEG 1 TARGET: Exactly 250 meters due North of Leeward
+  windwardMarkLat: 13.672710,
   windwardMarkLon: 121.401286,
   
-  gybeMarkLat: 13.67091593,
-  gybeMarkLon: 121.401286 + 0.00027735, // 0.00027735 is 30 meters Eest
-
-  askedAI: false,
-  paused: false,
+  // 🧭 LEG 2 TARGET: Symmetrical Gybe mark (125m North, 208m East)
+  gybeMarkLat: 13.671587,
+  gybeMarkLon: 121.402827, 
 
 
     // 🎯 The Leaflet marker instance reference
