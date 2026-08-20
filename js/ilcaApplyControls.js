@@ -28,12 +28,6 @@ export function applyControls(pointOfSail, windSpeed, controls) {
   // 🔬 DEBUG TRACER
   //console.log("PAYLOAD CHECK:", JSON.stringify(controls));
 
-  // --- CAPSIZE CHECK ---
-  if (controls.capsized) {
-    controls.heelAngle = 90;
-    return 0.0;
-  }
-
   // --- SPECIAL CASE: IN IRONS ---
   if (pointOfSail === "In Irons") {
     controls.heelingForceMultiplier = 0.0;

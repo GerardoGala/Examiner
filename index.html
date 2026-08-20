@@ -250,12 +250,12 @@
 
     function updateBoomControl(boomAngle) {
       window.globalSimulationData.ILCA.boomAngle = String(boomAngle);
-      console.log(`boom angle: ${window.globalSimulationData.ILCA.boomAngle}`);
+      //console.log(`boom angle: ${window.globalSimulationData.ILCA.boomAngle}`);
     }
 
     function updateSailorPosition(position) {
-        window.globalSimulationData.ILCA.sailorPosition = position;
-        console.log(`sailor position: ${window.globalSimulationData.ILCA.sailorPosition}`);
+      window.globalSimulationData.ILCA.sailorPosition = position;
+      //console.log(`sailor position: ${window.globalSimulationData.ILCA.sailorPosition}`);
 
     }
 
@@ -314,16 +314,6 @@
           }
       });
 
-      // ================================================================
-      // Placeholder functions so your HTML 'onclick' attributes don't error out
-      // Keep these if you haven't written the real logic for them yet!
-      // ================================================================
-      function updateBoomControl(val) { console.log("Boom set to:", val); }
-      function updateDaggerboardControl(val) { console.log("Daggerboard set to:", val); }
-      function updateSailorPosition(val) { console.log("Sailor position set to:", val); }
-      function updateVangControl(val) { console.log("Vang set to:", val); }
-      function updateDownhaulControl(val) { console.log("Downhaul set to:", val); }
-      function updateOuthaulControl(val) { console.log("Outhaul set to:", val); }
   </script>
 
 
