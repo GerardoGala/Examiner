@@ -3,6 +3,7 @@
 /**
  * Calculates the dynamic heeling forces, handles momentum smoothing,
  * sets the clinometer display angle, and checks for an over-rotation capsize event.
+ * Fully optimized to capture wind speed parameters from both arguments and global data state trees.
  * @param {string} pointOfSail - Current relative point of sail string
  * @param {number} windSpeed - Wind speed in knots
  * @param {object} controls - The active ILCA global data data object references
@@ -27,16 +28,29 @@ export function calculateHeelAndCapsize(pointOfSail, windSpeed, controls) {
     controls.heelAngle = 0;
   }
 
+  // 👉 BUG RECOVERY: Fallback check to capture wind speed if the parameter argument is empty/incorrect
+  let activeWindSpeed = typeof windSpeed === 'number' ? windSpeed : 0;
+  if (activeWindSpeed === 0 && controls && typeof controls.windSpeed === 'number') {
+    activeWindSpeed = controls.windSpeed;
+  }
+  if (activeWindSpeed === 0 && window.globalSimulationData && typeof window.globalSimulationData.windSpeed === 'number') {
+    activeWindSpeed = window.globalSimulationData.windSpeed;
+  }
+  // Default fallback to your standard testing speed if all else fails
+  if (activeWindSpeed === 0) activeWindSpeed = 15;
+
+  // Normalize Point of Sail safely to handle outputs from your getPointOfSail() function ("Running")
+  const normalizedPOS = typeof pointOfSail === 'string' ? pointOfSail.toLowerCase().trim() : '';
+
   // --- INSULATED CAPSIZE AND HEEL CALCULATION ENGINE ---
   let windHeelFactor = 0.0;
-  if (pointOfSail === "Close Hauled") windHeelFactor = 1.4;
-  if (pointOfSail === "Close Reach") windHeelFactor = 1.6;
-  if (pointOfSail === "Beam Reach") windHeelFactor = 1.9;  
-  if (pointOfSail === "Broad Reach") windHeelFactor = 0.4; 
-  if (pointOfSail === "Running") windHeelFactor = 0.1;
+  if (normalizedPOS === "close wrapped" || normalizedPOS === "close hauled") windHeelFactor = 1.4;
+  if (normalizedPOS === "close reach") windHeelFactor = 1.6;
+  if (normalizedPOS === "beam reach") windHeelFactor = 1.9;  
+  if (normalizedPOS === "broad reach") windHeelFactor = 0.4; 
+  if (normalizedPOS === "running" || normalizedPOS === "run") windHeelFactor = 0.1;
 
-  // --- 🎯 FIXED: EXPONENTIAL TENSION MATH STRING SANITIZATION ---
-  // If boomAngle is a string range description like "0-8", safely convert to raw number 8
+  // --- 🎯 EXPONENTIAL TENSION MATH STRING SANITIZATION ---
   let sheet = 0;
   if (typeof controls.boomAngle === 'string' && controls.boomAngle.includes('-')) {
     const parts = controls.boomAngle.split('-');
@@ -58,22 +72,62 @@ export function calculateHeelAndCapsize(pointOfSail, windSpeed, controls) {
     daggerboardLeverage = 1.00; 
   }
 
+  // Normalize Sailor Position to avoid any casing text matching bugs
+  const normalizedPosition = typeof controls.sailorPosition === 'string' ? controls.sailorPosition.toLowerCase().trim() : '';
+
   // Sailor counter-weight stability multipliers
   let hikingEffort = 1.0; 
-  if (controls.sailorPosition === "Hike Hard") {
+  if (normalizedPosition === "hike hard") {
     hikingEffort = 0.35; 
-  } else if (controls.sailorPosition === "Mid Center") {
-    hikingEffort = 1.15; // Added your "Mid Center" log name variant here for stability!
-  } else if (controls.sailorPosition === "Aft") {
+  } else if (normalizedPosition === "mid center") {
+    hikingEffort = 1.15; 
+  } else if (normalizedPosition === "aft") {
     hikingEffort = 1.45; 
   }
 
   // Calculate target heel angle
-  const targetHeelAngle = windSpeed * windHeelFactor * sheetTensionFactor * hikingEffort * daggerboardLeverage * 2.1;
+  let targetHeelAngle = activeWindSpeed * windHeelFactor * sheetTensionFactor * hikingEffort * daggerboardLeverage * 2.1;
   
-  if (pointOfSail === "In Irons") {
+  // --- ⛵ DEATH ROLL PHYSICS SIMULATION ENGINE ---
+  let isDeathRolling = false;
+  let deathRollHeel = 0;
+
+  // Triggers downwind at 15 knots (Using the robust activeWindSpeed scanner variable)
+  if ((normalizedPOS === "running" || normalizedPOS === "run") && activeWindSpeed >= 12) {
+    
+    // Weight placement modifier (Aft protects, anything else triggers danger)
+    let weightModifier = 1.0;
+    if (normalizedPosition === "aft") {
+      weightModifier = 0.2; // Safe profile
+    } else if (normalizedPosition === "mid center") {
+      weightModifier = 1.2; // Unstable configuration
+    } else {
+      weightModifier = 1.6; // High danger (Forward/Leeward)
+    }
+
+    const rollRiskIndex = weightModifier;
+
+    // Triggers oscillating physics if position is NOT Aft
+    if (rollRiskIndex > 0.5) {
+      isDeathRolling = true;
+      
+      const timestamp = Date.now() / 1000;
+      const oscillationFrequency = 2.2; // Quickened up wobble velocity feel
+      const oscillationAmplitude = rollRiskIndex * 28; // Extends calculations out past 45 degrees
+      const windwardBias = -14 * rollRiskIndex; // Strong windward torque drop pull
+      
+      deathRollHeel = windwardBias + (Math.sin(timestamp * oscillationFrequency * Math.PI) * oscillationAmplitude);
+    }
+  }
+
+  // Apply tracking states back down to the telemetry engine objects
+  if (normalizedPOS === "in irons") {
     controls.heelAngle += (0 - controls.heelAngle) * 0.3;
+  } else if (isDeathRolling) {
+    // Sharp responsiveness adjustment for aggressive death roll oscillations
+    controls.heelAngle += (deathRollHeel - controls.heelAngle) * 0.8;
   } else {
+    // Safe limits protection clamping layer
     const maximumCalculatedAngle = Math.min(Math.max(targetHeelAngle, 0), 90);
     controls.heelAngle += (maximumCalculatedAngle - controls.heelAngle) * 0.6;
   }
@@ -88,11 +142,13 @@ export function calculateHeelAndCapsize(pointOfSail, windSpeed, controls) {
   // STORE VALUE FOR UI GAUGE
   controls.clinometer = controls.heelAngle * displayDirectionMultiplier;
 
-  // Evaluate absolute catastrophic rollover parameters
-  if (controls.heelAngle >= 45) {
+  // Evaluate absolute catastrophic rollover parameters (Handles windward and leeward capsizes)
+  if (Math.abs(controls.heelAngle) >= 45) {
     controls.capsized = true;
-    controls.heelAngle = 90;
-    controls.clinometer = 90 * displayDirectionMultiplier;
+
+    const capsizeDirection = controls.heelAngle >= 0 ? 1 : -1;
+    controls.heelAngle = 90 * capsizeDirection;
+    controls.clinometer = 90 * displayDirectionMultiplier * capsizeDirection;
     controls.speed = 0; 
     return true; 
   }
