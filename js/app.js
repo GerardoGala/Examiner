@@ -42,10 +42,18 @@ async function loadConfig() {
           warningDiv.classList.remove("danger-shake");
         }
 
-        alert("Boom! You capsized! Make sure to hike out or ease your sheet when the wind picks up.");
+        // 👉 THE FIX: Extract race timer metrics and structural failure reasons
+        const currentRaceTime = window.globalSimulationData?.raceTime || 0;
+        const failureReason = window.globalSimulationData.ILCA.capsizeReason || "leeward_heel";
+
+        // Stop the simulation processing loop clocks
         stopSimulation();
+
+        // 👉 REDIRECT ROUTER PIPELINE: Send them instantly to finish.html with data flags
+        window.location.href = `finish.html?time=${currentRaceTime}&reason=${failureReason}`;
         return;
       }
+
 
       updateILCA(map);
 

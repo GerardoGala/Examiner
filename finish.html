@@ -22,6 +22,19 @@
     </p>
   </div>
 
+  <!-- 🚨 NEW: Special diagnostic educational feedback box for Death Rolls -->
+  <div id="death-roll-fail" class="alert alert-danger" style="max-width: 600px; margin: 0 auto; display:none; text-align: left;">
+    <h2 class="text-center text-danger mb-3"><i class="bi bi-exclamation-triangle-fill"></i> Exam Failed!</h2>
+    <h5 class="text-dark">Reason: Downwind Death Roll Capsize</h5>
+    <p class="text-secondary" style="font-size: 0.95rem; line-height: 1.5;">
+      While sailing downwind on a dead run in 15 knots of wind, your boat entered severe side-to-side oscillations and inverted completely to windward.
+    </p>
+    <hr>
+    <p class="mb-0 text-success" style="font-size: 0.9rem; font-weight: 600;">
+      💡 Coaching Tip: Next time, you must shift your position selector to <strong>AFT</strong> immediately to sink the stern, lift the bow, and cancel out the death roll force!
+    </p>
+  </div>
+
   <div id="fail" style="max-width: 800px; margin: 0 auto; display:none;">
     <h2>Please try again</h2>
     <p>
@@ -29,15 +42,22 @@
     </p>
   </div>
 
-  <button onclick="closeFinishDialog()" class="btn btn-primary btn-lg">Close</button>
+  <div class="mt-4">
+    <button onclick="closeFinishDialog()" class="btn btn-primary btn-lg">Close</button>
+  </div>
 </section>
 
 <script>
   function initResultsPage() {
     const urlParams = new URLSearchParams(window.location.search);
     const raceTimeValue = parseFloat(urlParams.get('time')) || 0;
+    // Extract the dynamic capsize tracer flag sent from the simulation pipeline
+    const reasonValue = urlParams.get('reason') || '';
 
-    if (raceTimeValue <= 180) {
+    // Check if the student capsized due to a death roll first
+    if (reasonValue === 'death_roll') {
+      document.getElementById("death-roll-fail").style.display = "block";
+    } else if (raceTimeValue <= 180 && raceTimeValue > 0) {
       document.getElementById("pass").style.display = "block";
       document.getElementById("raceTimePass").innerText = raceTimeValue;
     } else {
