@@ -31,6 +31,7 @@ async function loadConfig() {
       // ⏱️ TIMER STEP: Numerical seconds counter increments cleanly here
       window.globalSimulationData.ILCA.timer++;
 
+
       // --- Capsize Halting Check ---
       if (window.globalSimulationData.ILCA.capsized) {
         console.warn("Simulation stopped due to capsize.");
@@ -42,17 +43,16 @@ async function loadConfig() {
           warningDiv.classList.remove("danger-shake");
         }
 
-        // 👉 THE FIX: Extract race timer metrics and structural failure reasons
         const currentRaceTime = window.globalSimulationData?.raceTime || 0;
         const failureReason = window.globalSimulationData.ILCA.capsizeReason || "leeward_heel";
 
-        // Stop the simulation processing loop clocks
         stopSimulation();
 
-        // 👉 REDIRECT ROUTER PIPELINE: Send them instantly to finish.html with data flags
+        // 👉 Redirect with time and specific capsize reason
         window.location.href = `finish.html?time=${currentRaceTime}&reason=${failureReason}`;
         return;
       }
+
 
 
       updateILCA(map);
