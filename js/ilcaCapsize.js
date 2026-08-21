@@ -99,24 +99,26 @@ export function calculateHeelAndCapsize(pointOfSail, windSpeed, controls) {
     
     let weightModifier = 1.0;
     if (normalizedPosition === "aft") {
-      weightModifier = 0.2;  
+      weightModifier = 0.2;  // Safe profile - completely cancels death roll
     } else if (normalizedPosition === "hike hard") {
-      weightModifier = 0.45; 
+      weightModifier = 1.65; // ❌ FIXED: Triggers a distinct rocking pendulum that breaks 45°
     } else if (normalizedPosition === "mid center") {
-      weightModifier = 1.2;  
+      weightModifier = 1.95; // ❌ FIXED: High instability from sitting center. Forces capsize.
     } else {
-      weightModifier = 1.6;  
+      weightModifier = 2.40; // ❌ MAXIMUM DANGER (Forward/Leeward) - Flips almost instantly
     }
 
     const rollRiskIndex = weightModifier;
 
+    // Any position other than 'aft' has a modifier > 0.5 and will trigger the death roll
     if (rollRiskIndex > 0.5) {
       isDeathRolling = true;
       
       const timestamp = Date.now() / 1000;
       const oscillationFrequency = 2.2; 
-      const oscillationAmplitude = rollRiskIndex * 28; 
-      const windwardBias = -14 * rollRiskIndex; 
+      // Amplitudes are beefed up here to ensure they clear the 45-degree limit in under 5 seconds
+      const oscillationAmplitude = rollRiskIndex * 30; 
+      const windwardBias = -16 * rollRiskIndex; 
       
       deathRollHeel = windwardBias + (Math.sin(timestamp * oscillationFrequency * Math.PI) * oscillationAmplitude);
     }
@@ -141,7 +143,7 @@ export function calculateHeelAndCapsize(pointOfSail, windSpeed, controls) {
 
   controls.clinometer = controls.heelAngle * displayDirectionMultiplier;
 
-  // Evaluate absolute catastrophic rollover parameters
+  // Evaluate absolute catastrophic rollover parameters (Handles windward and leeward capsizes)
   if (Math.abs(controls.heelAngle) >= 45) {
     controls.capsized = true;
 
