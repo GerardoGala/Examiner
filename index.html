@@ -3,6 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <title>Examiner</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
 
@@ -28,10 +30,13 @@
 </head>
 <body>
   <div class="container">
+    <div id="titleBar"           style="flex: 1;">
+        San Juan Academy
+    </div>
     <div id="map"                style="flex: 15;">
     </div>
     <div id="controlSelector"    style="flex: 1;">
-      <h4>Control Selector</h4>
+      <h4>&nbsp;Control Selector</h4>
       <div class="controlSelector" style="display: flex; gap: 12px; align-items: center;">
           <label>
               <input type="radio" name="inputControl" value="1" checked>
@@ -65,9 +70,7 @@
         <button class="control-button button-starboard" onclick="window.globalSimulationData.ILCA.maneuver = 'turn-starboard'" style="flex: 1; height: 100%;">TURN STARBOARD</button>
       </div>
     </div>
-
-
-  <div id="input-pane"           style="flex: 5;">
+    <div id="input-pane"         style="flex: 5;">
       <div id="mainsheetControl" class="input-section active">
         <h4>&nbsp;MainSheet</h4>
         <div class="control-row">
@@ -173,7 +176,7 @@
   /* Sets the modal size to 80% of the screen */
   .modal-content {
       width: 80%;
-      height: 35%;
+      height: 30%;
       background-color: #fff;
       border-radius: 8px;
       overflow: hidden;
