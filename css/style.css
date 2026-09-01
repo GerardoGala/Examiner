@@ -29,7 +29,7 @@ body {
 .container {
   display: flex;
   flex-direction: column;
-  height: 100dvh;
+  height: 90dvh;
 }
 
   /* 1. Make the input pane a flex container that fills the height */
